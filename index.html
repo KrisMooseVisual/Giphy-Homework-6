@@ -41,32 +41,70 @@
         <h2>DANCE!</h2>
         <h3>DANCE!</h3>
 
-        <!--Different styles and forms of dance-->
+
+        <!--Different topics-->
         <div id="buttons-view"></div>
 
-        <form id="dance-styles">
-            <label for="dance-input">Submit Your Dance</label>
-            <input type="text" id="dance-input">
+        <form id="topic-form">
+            <label for="topic-input">What's Your Topic?</label>
+            <input type="text" id="topic-input">
 
-            <input id="add-dance" type="submit" value="Submit">
+            <input id="add-topic" type="submit" value="Submit Topic">
         </form>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
         <script type="text/javascript">
-        
-        // the array of dances
-        var topics = ["Dance", "Music", "Art", "The Universe", "Nature", "Culture", "Languages"];
 
-        function renderButtons() {
-            $("buttons-view").empty();
+            // the array for topic Dance
+            var topics = ["Samba", "Salsa", "Breakdance", "Ballet", "Tap Dance", "Hip Hop Dance", "Swing Dance", "Lindy Hop"];
 
-            //
-        }
+            function renderButtons() {
+
+                $("#buttons-view").empty();
+
+                //Creating for loop for each topic
+                for (var i = 0; i < topics.length; i++) {
+
+                    //creating button for each topic
+                    var a = $("<button>");
+
+                    a.addClass("topic");
+                    a.attr("data-name", topics[i]);
+                    a.text(topics[i]);
+                    $("#buttons-view").append(a);
+                }
+            }
+
+            $("#add-topic").on("click", function (event) {
+
+                event.preventDefault();
+
+                var topic = $("#topic-input").val().trim();
+
+                topics.push(topic);
+
+                renderButtons();
+            });
+
+            renderButtons();
+
+            // SPACE IN CODE FOR VISUAL CLARITY!//
+            //Setting .on("click") function and variable for giphy API//
+            $("button").on("click", function() {
+
+                var dance = $(this).attr("data-dance");
+
+                //URL for giphy API
+                
+
+            }
+
 
         </script>
 
     </div>
+
 
 </body>
 
