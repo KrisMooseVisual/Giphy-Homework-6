@@ -42,47 +42,47 @@
         <h3>DANCE!</h3>
 
 
-        <!--Different topics-->
+        <!--Different dances-->
         <div id="buttons-view"></div>
 
-        <form id="topic-form">
-            <label for="topic-input">Whats Your Dance?</label>
-            <input type="text" id="topic-input">
+        <form id="dance-form">
+            <label for="dance-input">Whats Your Dance?</label>
+            <input type="text" id="dance-input">
 
-            <input id="add-topic" type="submit" value="Submit Topic">
+            <input id="add-dance" type="submit" value="Submit dance">
         </form>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
         <script type="text/javascript">
 
-            // the array for topic Dance
-            var topics = ["Samba", "Salsa", "Breakdance", "Ballet", "Tap Dance", "Hip Hop Dance", "Swing Dance", "Lindy Hop"];
+            // the array for dance Dance
+            var dances = ["Samba", "Salsa", "Breakdance", "Ballet", "Tap Dance", "Hip Hop Dance", "Swing Dance", "Lindy Hop"];
 
             function renderButtons() {
 
                 $("#buttons-view").empty();
 
-                //Creating for loop for each topic
-                for (var i = 0; i < topics.length; i++) {
+                //Creating for loop for each dance
+                for (var i = 0; i < dances.length; i++) {
 
-                    //creating button for each topic
-                    var button = $("<button>");
+                    //creating button for each dance
+                    var a = $("<button>");
 
-                    button.addClass("topic");
-                    button.attr("data-dance", topics[i]);
-                    button.text(topics[i]);
-                    $("#buttons-view").append(button);
+                    a.addClass("dance");
+                    a.attr("data-name", dances[i]);
+                    a.text(dances[i]);
+                    $("#buttons-view").append(a);
                 }
             }
 
-            $("#add-topic").on("click", function (event) {
+            $("#add-dance").on("click", function (event) {
 
                 event.preventDefault();
 
-                var topic = $("#topic-input").val().trim();
+                var dance = $("#dance-input").val().trim();
 
-                topics.push(topic);
+                dances.push(dance);
 
                 renderButtons();
             });
@@ -91,13 +91,12 @@
 
             // SPACE IN CODE FOR VISUAL CLARITY!//
             //Setting .on("click") function and variable for giphy API//
-            $("button").on("click", function () {
+            $("#dance-button").on("click", function () {
 
                 var dance = $(this).attr("data-dance");
 
                 //URL for giphy API
-                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-                    dance + "&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10";
+                var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&tag=dance";
 
                 //AJAX FOR URL
                 $.ajax({
@@ -107,7 +106,13 @@
 
                     .then(function (response) {
 
-                        var results = response.data;
+                        var imageURL = response.data.image_original_url;
+
+                        var danceImage = $("<img>");
+
+                        danceImage.attr("src", imageURL);
+                        danceImage.attr("alt", "dance image");
+
 
                         //FOR LOOP!
                         for (var i = 0; i < results.length; i++) {
@@ -120,12 +125,12 @@
 
                             danceImage.attr("src", results[i].images.fixed_height.url);
 
-                            danceDiv.prepend(p);
-                            danceDiv.prepend(danceImage);
+                            danceDiv.append(p);
+                            danceDiv.append(danceImage);
 
-                            $("#gifs-appear-here").append(danceDiv);
-
+                            $("#gifs-appear-here").prepend(danceDiv);
                         }
+
                     });
 
 
