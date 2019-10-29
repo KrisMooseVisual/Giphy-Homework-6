@@ -135,12 +135,21 @@
                             $("#gifs-appear-here").prepend(danceDiv);
                         }
 
-                        $(".dances").on("click", function(){
+                        //refered to pausing gif soloution
+                        $(".danceGif").on("click", function () {
+                            var state = $(this).attr("data-state");
 
-                            var state= $(this).attr("data-state");
+                            if (state === "still") {
+                                $(this).attr("src", $(this).attr("data-animate"));
+                                $(this).attr("data-state", "animate");
+                            }
 
-                        
-                        }
+                            else {
+                                $(this).attr("src", $(this).attr("data-still"));
+                                $(this).attr("data-state", "still");
+                            }
+
+                        });
 
                     });
 
