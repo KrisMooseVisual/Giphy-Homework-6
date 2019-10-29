@@ -50,7 +50,9 @@
             <input type="text" id="dance-input">
 
             <input id="add-dance" type="submit" value="Submit dance">
+
         </form>
+        <div id="gifs-appear-here"></div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -75,6 +77,7 @@
                     $("#buttons-view").append(a);
                 }
             }
+            renderButtons();
 
             $("#add-dance").on("click", function (event) {
 
@@ -87,16 +90,17 @@
                 renderButtons();
             });
 
-            renderButtons();
 
             // SPACE IN CODE FOR VISUAL CLARITY!//
             //Setting .on("click") function and variable for giphy API//
-            $("#dance-button").on("click", function () {
+            //syntax $(document).on("click...") needed to continue adding buttons with out making other buttons stop working.
+            $(document).on("click", ".dance", function () {
 
-                var dance = $(this).attr("data-dance");
-
+                var dance = $(this).attr("data-name");
+                console.log(dance);
                 //URL for giphy API
-                var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&tag=dance";
+                var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=jo3e3c4KXVOGa4Z1laCKmxZjup37IXks&limit=10&q=" + dance
+                console.log(queryURL);
 
                 //AJAX FOR URL
                 $.ajax({
@@ -104,26 +108,26 @@
                     method: "GET"
                 })
 
-                    .then(function (response) {
+                    .then(function (results) {
+                        console.log(results.data);
+                        // var imageURL = results.data.image_original_url;
+                        // console.log(imageURL) + "is the image URL");
+                        // var danceImage = $("<img>");
 
-                        var imageURL = response.data.image_original_url;
-
-                        var danceImage = $("<img>");
-
-                        danceImage.attr("src", imageURL);
-                        danceImage.attr("alt", "dance image");
+                        // danceImage.attr("src", imageURL);
+                        // danceImage.attr("alt", "dance image");
 
 
                         //FOR LOOP!
-                        for (var i = 0; i < results.length; i++) {
+                        for (var i = 0; i < results.data.length; i++) {
 
                             var danceDiv = $("<div>");
 
-                            var p = $("<p>").text("Rating:" + results[i].rating);
+                            var p = $("<p>").text("Rating:" + results.data[i].rating);
 
                             var danceImage = $("<img>");
 
-                            danceImage.attr("src", results[i].images.fixed_height.url);
+                            danceImage.attr("src", results.data[i].images.fixed_height.url);
 
                             danceDiv.append(p);
                             danceDiv.append(danceImage);
