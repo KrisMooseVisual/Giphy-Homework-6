@@ -46,7 +46,7 @@
         <div id="buttons-view"></div>
 
         <form id="topic-form">
-            <label for="topic-input">What's Your Topic?</label>
+            <label for="topic-input">Whats Your Dance?</label>
             <input type="text" id="topic-input">
 
             <input id="add-topic" type="submit" value="Submit Topic">
@@ -67,12 +67,12 @@
                 for (var i = 0; i < topics.length; i++) {
 
                     //creating button for each topic
-                    var a = $("<button>");
+                    var button = $("<button>");
 
-                    a.addClass("topic");
-                    a.attr("data-name", topics[i]);
-                    a.text(topics[i]);
-                    $("#buttons-view").append(a);
+                    button.addClass("topic");
+                    button.attr("data-dance", topics[i]);
+                    button.text(topics[i]);
+                    $("#buttons-view").append(button);
                 }
             }
 
@@ -91,14 +91,45 @@
 
             // SPACE IN CODE FOR VISUAL CLARITY!//
             //Setting .on("click") function and variable for giphy API//
-            $("button").on("click", function() {
+            $("button").on("click", function () {
 
                 var dance = $(this).attr("data-dance");
 
                 //URL for giphy API
-                
+                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+                    dance + "&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10";
 
-            }
+                //AJAX FOR URL
+                $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                })
+
+                    .then(function (response) {
+
+                        var results = response.data;
+
+                        //FOR LOOP!
+                        for (var i = 0; i < results.length; i++) {
+
+                            var danceDiv = $("<div>");
+
+                            var p = $("<p>").text("Rating:" + results[i].rating);
+
+                            var danceImage = $("<img>");
+
+                            danceImage.attr("src", results[i].images.fixed_height.url);
+
+                            danceDiv.prepend(p);
+                            danceDiv.prepend(danceImage);
+
+                            $("#gifs-appear-here").append(danceDiv);
+
+                        }
+                    });
+
+
+            });
 
 
         </script>
