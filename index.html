@@ -127,8 +127,14 @@
                                 var p = $("<p>").text("Rating:" + results.data[i].rating);
 
                                 var danceImage = $("<img>");
-
+                                danceImage.addClass("danceGif");
                                 danceImage.attr("src", results.data[i].images.fixed_height.url);
+                                danceImage.attr("data-state", "still");
+                                danceImage.attr("data-still", results.data[i].images.fixed_height_still.url);
+
+
+                                danceImage.attr("data-animate", results.data[i].images.fixed_height.url);
+
 
                                 danceDiv.append(p);
                                 danceDiv.append(danceImage);
@@ -138,7 +144,7 @@
 
                             //refered to pausing gif soloution
                             $(".danceGif").on("click", function () {
-
+                                console.log("Click!")
                                 var state = $(this).attr("data-state");
 
 
