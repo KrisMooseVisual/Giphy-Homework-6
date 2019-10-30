@@ -5,164 +5,164 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Giphy Gifs</title>
+    <title>Dance Gifs</title>
     <style type="text/css">
-        button,
-        div,
-        form,
-        input {
-            margin: 20px;
+        div {
+
+            text-align: center;
+
+            text-align: center;
+
+            text-align: center;
         }
 
-        ;
+        .container h1 {
 
-        h1 {
-            color: red
+            color: red;
         }
 
-        ;
+        .container h3 {
 
-        h2 {
-            color: black
+            color: green;
         }
 
-        ;
+        body {
 
-        h3 {
-            color: green
+            background-color: rgb(188, 198, 0);
         }
     </style>
 </head>
 
 <body>
+    <center>
+        <div class="container">
+            <center>
+                <h1>DANCE!</h1>
+                <h2>DANCE!</h2>
+                <h3>DANCE!</h3>
+            </center>
 
-    <div class="container">
-        <h1>DANCE!</h1>
-        <h2>DANCE!</h2>
-        <h3>DANCE!</h3>
+            <!--Different dances-->
+            <div id="buttons-view"></div>
 
+            <form id="dance-form">
+                <label for="dance-input">Whats Your Dance?</label>
+                <input type="text" id="dance-input">
 
-        <!--Different dances-->
-        <div id="buttons-view"></div>
+                <input id="add-dance" type="submit" value="Submit dance">
 
-        <form id="dance-form">
-            <label for="dance-input">Whats Your Dance?</label>
-            <input type="text" id="dance-input">
+            </form>
 
-            <input id="add-dance" type="submit" value="Submit dance">
+            <div id="gifs-appear-here"></div>
 
-        </form>
-        <div id="gifs-appear-here"></div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script type="text/javascript">
 
-        <script type="text/javascript">
+                // the array for dance Dance
+                var dances = ["Samba", "Salsa", "Breakdance", "Ballet", "Tap Dance", "Hip Hop Dance", "Swing Dance", "Lindy Hop"];
 
-            // the array for dance Dance
-            var dances = ["Samba", "Salsa", "Breakdance", "Ballet", "Tap Dance", "Hip Hop Dance", "Swing Dance", "Lindy Hop"];
+                function renderButtons() {
 
-            function renderButtons() {
+                    $("#buttons-view").empty();
 
-                $("#buttons-view").empty();
+                    //Creating for loop for each dance
+                    for (var i = 0; i < dances.length; i++) {
 
-                //Creating for loop for each dance
-                for (var i = 0; i < dances.length; i++) {
+                        //creating button for each dance
+                        var a = $("<button>");
 
-                    //creating button for each dance
-                    var a = $("<button>");
-
-                    a.addClass("dance");
-                    a.attr("data-name", dances[i]);
-                    a.text(dances[i]);
-                    $("#buttons-view").append(a);
+                        a.addClass("dance");
+                        a.attr("data-name", dances[i]);
+                        a.text(dances[i]);
+                        $("#buttons-view").append(a);
+                    }
                 }
-            }
-            renderButtons();
-
-            $("#add-dance").on("click", function (event) {
-
-                event.preventDefault();
-
-                var dance = $("#dance-input").val().trim();
-
-                dances.push(dance);
-
                 renderButtons();
-            });
+
+                $("#add-dance").on("click", function (event) {
+
+                    event.preventDefault();
+
+                    var dance = $("#dance-input").val().trim();
+
+                    dances.push(dance);
+
+                    renderButtons();
+                });
 
 
-            // SPACE IN CODE FOR VISUAL CLARITY!//
-            //Setting .on("click") function and variable for giphy API//
-            //syntax $(document).on("click...") needed to continue adding buttons with out making other buttons stop working.
-            $(document).on("click", ".dance", function () {
+                // SPACE IN CODE FOR VISUAL CLARITY!//
+                //Setting .on("click") function and variable for giphy API//
+                //syntax $(document).on("click...") needed to continue adding buttons with out making other buttons stop working.
+                $(document).on("click", ".dance", function () {
 
-                var dance = $(this).attr("data-name");
-                console.log(dance);
-                //URL for giphy API
-                var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=jo3e3c4KXVOGa4Z1laCKmxZjup37IXks&limit=10&q=" + dance
-                console.log(queryURL);
+                    var dance = $(this).attr("data-name");
+                    console.log(dance);
+                    //URL for giphy API
+                    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=jo3e3c4KXVOGa4Z1laCKmxZjup37IXks&limit=10&q=" + dance
+                    console.log(queryURL);
 
-                //AJAX FOR URL
-                $.ajax({
-                    url: queryURL,
-                    method: "GET"
-                })
+                    //AJAX FOR URL
+                    $.ajax({
+                        url: queryURL,
+                        method: "GET"
+                    })
 
-                    .then(function (results) {
-                        console.log(results.data);
-                        // var imageURL = results.data.image_original_url;
-                        // console.log(imageURL) + "is the image URL");
-                        // var danceImage = $("<img>");
+                        .then(function (results) {
+                            console.log(results.data);
+                            // var imageURL = results.data.image_original_url;
+                            // console.log(imageURL) + "is the image URL");
+                            // var danceImage = $("<img>");
 
-                        // danceImage.attr("src", imageURL);
-                        // danceImage.attr("alt", "dance image");
+                            // danceImage.attr("src", imageURL);
+                            // danceImage.attr("alt", "dance image");
 
 
-                        //FOR LOOP!
-                        for (var i = 0; i < results.data.length; i++) {
+                            //FOR LOOP!
+                            for (var i = 0; i < results.data.length; i++) {
 
-                            var danceDiv = $("<div>");
+                                var danceDiv = $("<div>");
 
-                            var p = $("<p>").text("Rating:" + results.data[i].rating);
+                                var p = $("<p>").text("Rating:" + results.data[i].rating);
 
-                            var danceImage = $("<img>");
+                                var danceImage = $("<img>");
 
-                            danceImage.attr("src", results.data[i].images.fixed_height.url);
+                                danceImage.attr("src", results.data[i].images.fixed_height.url);
 
-                            danceDiv.append(p);
-                            danceDiv.append(danceImage);
+                                danceDiv.append(p);
+                                danceDiv.append(danceImage);
 
-                            $("#gifs-appear-here").prepend(danceDiv);
-                        }
-
-                        //refered to pausing gif soloution
-                        $(".danceGif").on("click", function () {
-                            console.log(click);
-                            var state = $(this).attr("data-state");
-                            
-                            
-                            if (state === "still") {
-                                $(this).attr("src", $(this).attr("data-animate"));
-                                $(this).attr("data-state", "animate");
-                            } 
-                            else {
-                                $(this).attr("src", $(this).attr("data-still"));
-                                $(this).attr("data-state", "still");
+                                $("#gifs-appear-here").prepend(danceDiv);
                             }
+
+                            //refered to pausing gif soloution
+                            $(".danceGif").on("click", function () {
+
+                                var state = $(this).attr("data-state");
+
+
+                                if (state === "still") {
+                                    $(this).attr("src", $(this).attr("data-animate"));
+                                    $(this).attr("data-state", "animate");
+                                } else {
+                                    $(this).attr("src", $(this).attr("data-still"));
+                                    $(this).attr("data-state", "still");
+                                }
+
+                            });
 
                         });
 
-                    });
+
+                });
 
 
-            });
+            </script>
 
+        </div>
 
-        </script>
-
-    </div>
-
-
+    </center>
 </body>
 
 </html>
